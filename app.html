@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LECO Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+
+        #chat-container {
+            width: 80%;
+            max-width: 500px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        #chatbox {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+
+        #chatbox p {
+            margin: 0.5em 0;
+        }
+
+        #chatbox p strong {
+            color: #007bff;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 100px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h1>LECO Chatbot</h1>
+        <div id="chatbox">
+            <p><strong>Chatbot:</strong> Hello! How can I assist you today?</p>
+        </div>
+        <input type="text" id="userMessage" placeholder="Type your message here...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        const CHATBOT_API_URL = "http://172.55.58.13:5000/chat";
+
+        function sendMessage() {
+            const userMessage = document.getElementById("userMessage").value;
+
+            // Make POST request to chatbot API
+            fetch(CHATBOT_API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: userMessage })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const chatbotResponse = data.response;
+
+                // Display user and chatbot messages in chatbox
+                const chatbox = document.getElementById("chatbox");
+                chatbox.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+                chatbox.innerHTML += `<p><strong>Chatbot:</strong> ${chatbotResponse}</p>`;
+
+                // Scroll to the latest message
+                chatbox.scrollTop = chatbox.scrollHeight;
+
+                // Clear the input box
+                document.getElementById("userMessage").value = "";
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - Learn Computer Online</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Basic styling for layout, modal, responsive design */
+      /*  body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        header, footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+        }
+        nav a {
+            margin: 0 10px;
+            color: #fff;
+            text-decoration: none;
+        }
+        .course-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .course-item {
+            border: 1px solid #ccc;
+            padding: 15px;
+            width: 300px;
+            text-align: center;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            text-align: left;
+            position: relative;
+        }
+        .close {
+            color: #aaa;
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        /* Filter input styles */
+        #courseFilter {
+            margin: 20px auto;
+            display: block;
+            padding: 8px;
+            width: 80%;
+            max-width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        /* FAQ section */
+        .faq {
+            margin: 20px;
+        }
+        .faq-item {
+            margin-bottom: 10px;
+        }
+        .faq-item h3 {
+            cursor: pointer;
+            color: #333;
+        }
+        .faq-item p.answer {
+            display: none;
+            padding-left: 20px;
+            color: #555;
+        }*/
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Learn Computer Online</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="courses.html">Courses</a>
+            <a href="blog.html">Blog</a>
+            <a href="resources.html">Resources</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        <h2>Our Courses</h2>
+        
+        <!-- Course Filter Input -->
+        <input type="text" id="courseFilter" placeholder="Filter courses..." onkeyup="filterCourses()">
+        
+        <!-- Course List Section -->
+        <div class="course-list">
+            <div class="course-item">
+                <h3>Introduction to Python</h3>
+                <p>Learn the basics of Python programming, including syntax, data types, and more.</p>
+                <button onclick="openModal('Introduction to Python', 'A beginner-friendly course to get started with Python programming.')">Learn More</button>
+            </div>
+            <div class="course-item">
+                <h3>Web Development Bootcamp</h3>
+                <p>Become a web developer with our comprehensive bootcamp covering HTML, CSS, JavaScript, and more.</p>
+                <button onclick="openModal('Web Development Bootcamp', 'Learn to build responsive websites from scratch using HTML, CSS, and JavaScript.')">Learn More</button>
+            </div>
+            <div class="course-item">
+                <h3>Data Science with R</h3>
+                <p>Master data science techniques using R programming, including data manipulation and visualization.</p>
+                <button onclick="openModal('Data Science with R', 'This course covers data manipulation, visualization, and analysis using R.')">Learn More</button>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <h3 onclick="toggleAnswer(this)">What is the duration of each course?</h3>
+                <p class="answer">Most courses take 4-6 weeks to complete, with weekly assignments.</p>
+            </div>
+            <div class="faq-item">
+                <h3 onclick="toggleAnswer(this)">Do I get a certificate after completing a course?</h3>
+                <p class="answer">Yes, a certificate is provided upon successful completion of each course.</p>
+            </div>
+            <div class="faq-item">
+                <h3 onclick="toggleAnswer(this)">Can I access the course material at any time?</h3>
+                <p class="answer">Yes, once enrolled, you have 24/7 access to the course material.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Structure -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Learn Computer Online. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Course Filter Function
+        function filterCourses() {
+            var input = document.getElementById('courseFilter');
+            var filter = input.value.toLowerCase();
+            var courseItems = document.getElementsByClassName('course-item');
+            
+            for (var i = 0; i < courseItems.length; i++) {
+                var courseTitle = courseItems[i].getElementsByTagName("h3")[0];
+                if (courseTitle) {
+                    var txtValue = courseTitle.textContent || courseTitle.innerText;
+                    courseItems[i].style.display = txtValue.toLowerCase().includes(filter) ? "" : "none";
+                }
+            }
+        }
+
+        // Modal Functionality
+        var modal = document.getElementById("courseModal");
+
+        function openModal(title, description) {
+            document.getElementById("modalTitle").innerText = title;
+            document.getElementById("modalDescription").innerText = description;
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // FAQ Toggle Functionality
+        function toggleAnswer(questionElement) {
+            var answer = questionElement.nextElementSibling;
+            answer.style.display = answer.style.display === "none" ? "block" : "none";
+        }
+    </script>
+</body>
+</html>

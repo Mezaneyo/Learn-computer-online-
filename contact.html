@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Learn Computer Online</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Header and logo styling */
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        /* Navigation styling */
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #45a049;
+            border-radius: 4px;
+        }
+
+        /* Main Content Styling */
+        main {
+            padding: 20px;
+        }
+
+        main h2 {
+            font-size: 2rem;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        main form label {
+            font-size: 1rem;
+            color: #333;
+            display: block;
+            margin-top: 10px;
+        }
+
+        main form input, main form textarea, main form button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 1rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        main form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        main form button:hover {
+            background-color: #45a049;
+        }
+
+        /* Quick Contact & Get in Touch Sections */
+        main h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        main p, main ul {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        main ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        main ul li a {
+            color: #4CAF50;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        main ul li a:hover {
+            color: #45a049;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #f1f1f1;
+            padding: 10px 20px;
+            text-align: center;
+            color: #333;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Learn Computer Online</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="courses.html">Courses</a>
+            <a href="blog.html">Blog</a>
+            <a href="resources.html">Resources</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        <h2>Contact Us</h2>
+        <form id="contactForm">
+    <input type="text" id="username" placeholder="Enter your username" required>
+    <textarea id="message" placeholder="Enter your message" required></textarea>
+    <button type="submit">Send Message</button>
+</form>
+
+<ul id="messageList"></ul>
+
+        <h3>Quick Contact via WhatsApp</h3>
+        <p>If you prefer, you can reach us on WhatsApp with one of the following quick messages:</p>
+        <ul>
+            <li><a href="https://wa.me/265983583444?text=How%20may%20I%20help%20you?" target="_blank">How may I help you?</a></li>
+            <li><a href="https://wa.me/265983583444?text=How%20can%20I%20enroll%20in%20a%20course?" target="_blank">How can I enroll in a course?</a></li>
+            <li><a href="https://wa.me/265983583444?text=What%20courses%20do%20you%20offer?" target="_blank">What courses do you offer?</a></li>
+        </ul>
+
+        <h3>Get in Touch</h3>
+        <p>If you have any questions, feel free to reach out:</p>
+        <ul>
+            <li><strong>Phone:</strong> <a href="tel:+265983583444">+265983583444</a> | <a href="https://wa.me/265983583444" target="_blank">WhatsApp</a></li>
+            <li><strong>Email:</strong> <a href="mailto:mezaneyo2@gmail.com">mezaneyo2@gmail.com</a></li>
+        </ul>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Learn Computer Online. All rights reserved.</p>
+    </footer>
+    <script>
+    // Initialize Socket.IO
+    const socket = io("http://172.58.172.77:5000");
+
+    // Function to send message to the server via API
+    async function sendMessage(username, message) {
+        const timestamp = new Date().toISOString();
+
+        try {
+            const response = await fetch("http://172.58.172.77:5000/send_message", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    message: message,
+                    timestamp: timestamp
+                })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                console.log("Message sent successfully:", data.message);
+            } else {
+                console.error("Error sending message:", data.message);
+            }
+        } catch (error) {
+            console.error("Network error:", error);
+        }
+    }
+
+    // Function to handle form submission
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        // Retrieve username and message values from the form
+        const username = document.getElementById("username").value;
+        const message = document.getElementById("message").value;
+
+        if (username && message) {
+            // Send the message via API and emit it to Socket.IO
+            sendMessage(username, message);
+            socket.emit("chat message", { username: username, message: message });
+            
+            // Clear the message input field
+            document.getElementById("message").value = "";
+        } else {
+            alert("Please enter both username and message.");
+        }
+    });
+
+    // Listen for real-time messages from the server and display them
+    socket.on("chat message", function(data) {
+        const messageList = document.getElementById("messageList");
+        
+        // Create a new message item
+        const messageItem = document.createElement("li");
+        messageItem.textContent = `${data.timestamp} - ${data.username}: ${data.message}`;
+        
+        // Append the new message item to the list
+        messageList.appendChild(messageItem);
+    });
+
+    // Retrieve all previous messages on page load
+    async function loadMessages() {
+        try {
+            const response = await fetch("http://172.58.172.77:5000/get_messages");
+            const data = await response.json();
+            
+            if (data.messages) {
+                const messageList = document.getElementById("messageList");
+                messageList.innerHTML = "";  // Clear current messages
+                
+                // Add each message to the list
+                data.messages.forEach(msg => {
+                    const messageItem = document.createElement("li");
+                    messageItem.textContent = `${msg.timestamp} - ${msg.username}: ${msg.message}`;
+                    messageList.appendChild(messageItem);
+                });
+            }
+        } catch (error) {
+            console.error("Error loading messages:", error);
+        }
+    }
+
+    // Load messages on page load
+    document.addEventListener("DOMContentLoaded", loadMessages);
+</script>
+</body>
+</html>

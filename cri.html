@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Socket.IO Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        /* Chat container */
+        #chat-container {
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Messages list */
+        #messages {
+            list-style: none;
+            padding: 0;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        #messages li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        #messages li:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        #messages li span.time {
+            font-size: 0.85em;
+            color: #888;
+            margin-right: 10px;
+        }
+
+        #messages li span.username {
+            font-weight: bold;
+            color: #333;
+            margin-right: 5px;
+        }
+
+        .message-actions {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            display: none;
+            flex-direction: column;
+        }
+
+        .message-actions button {
+            padding: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            margin: 2px 0;
+        }
+
+        .message-actions button:hover {
+            background-color: #45a049;
+        }
+
+        /* Typing notification */
+        #typing-notice {
+            color: gray;
+            font-style: italic;
+            margin-bottom: 10px;
+            height: 20px;
+        }
+
+        /* Input section */
+        #input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input[type="text"], button {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #clear-button {
+            background-color: #f44336;
+            margin-top: 10px;
+        }
+
+        #clear-button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+    <h1>Socket.IO Chat</h1>
+    <div id="chat-container">
+        <ul id="messages"></ul>
+        <p id="typing-notice"></p>
+        <div id="input-section">
+            <input id="username" type="text" placeholder="Your name" oninput="saveUsername()">
+            <input id="message" type="text" placeholder="Type your message here" oninput="notifyTyping()">
+            <button onclick="sendMessage()">Send</button>
+            <button id="clear-button" onclick="clearChat()">Clear Chat</button>
+        </div>
+    </div>
+
+    <script>
+    const socket = io.connect('http://127.0.0.1:5000');
+    let typingTimeout;
+
+    socket.on('connect', () => {
+        console.log("Connected to server");
+
+        const savedUsername = localStorage.getItem('username');
+        if (savedUsername) {
+            document.getElementById('username').value = savedUsername;
+        }
+        loadChatHistory();
+    });
+
+    socket.on('chat message', (data) => {
+        console.log("Message received:", data);  // Debugging
+        addMessageToChat({ user: data.username, message: data.message, time: data.timestamp });
+        saveMessage({ user: data.username, message: data.message, time: data.timestamp });
+    });
+
+    socket.on('user typing', (data) => {
+        const typingNotice = document.getElementById('typing-notice');
+        typingNotice.textContent = data.user ? `${data.user} is typing...` : '';
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => { typingNotice.textContent = ''; }, 2000);
+    });
+
+    function saveUsername() {
+        const username = document.getElementById('username').value;
+        localStorage.setItem('username', username);
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('message');
+        const username = document.getElementById('username').value || 'Anonymous';
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        if (input.value.trim() !== '') {
+            socket.emit('chat message', { username, message: input.value, timestamp: time });
+            input.value = '';
+            socket.emit('stop typing');
+        }
+    }
+
+    function notifyTyping() {
+        const username = document.getElementById('username').value || 'Anonymous';
+        socket.emit('typing', { user: username });
+    }
+
+    function addMessageToChat(data) {
+        const messages = document.getElementById('messages');
+        const messageElement = document.createElement('li');
+        messageElement.innerHTML = `
+            <span class="time">[${data.time}]</span> 
+            <span class="username">${data.user}:</span> 
+            ${data.message}
+            <div class="message-actions">
+                <button onclick="forwardMessage('${data.message}')">Forward</button>
+                <button onclick="deleteMessage(this)">Delete</button>
+                <button onclick="replyMessage('${data.message}')">Reply</button>
+            </div>
+        `;
+        messages.appendChild(messageElement);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function saveMessage(data) {
+        const messages = JSON.parse(localStorage.getItem('chatHistory')) || [];
+        messages.push(data);
+        localStorage.setItem('chatHistory', JSON.stringify(messages));
+    }
+
+    function loadChatHistory() {
+        const messages = JSON.parse(localStorage.getItem('chatHistory')) || [];
+        messages.forEach(addMessageToChat);
+    }
+
+    function clearChat() {
+        document.getElementById('messages').innerHTML = '';
+        localStorage.removeItem('chatHistory');
+        document.getElementById('typing-notice').textContent = '';
+    }
+
+    function forwardMessage(message) {
+        const forwardedMessage = prompt("Enter the recipient's name to forward this message:", "");
+        if (forwardedMessage) {
+            socket.emit('chat message', { user: forwardedMessage, message: message, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
+        }
+    }
+
+    function deleteMessage(button) {
+        const messageElement = button.closest('li');
+        const messageText = messageElement.textContent.trim();
+        messageElement.remove();
+
+        const messages = JSON.parse(localStorage.getItem('chatHistory')) || [];
+        const updatedMessages = messages.filter(msg => msg.message !== messageText);
+        localStorage.setItem('chatHistory', JSON.stringify(updatedMessages));
+    }
+
+    function replyMessage(message) {
+        const replyText = `Re: ${message}`;
+        const input = document.getElementById('message');
+        input.value = replyText;
+        input.focus();
+    }
+</script>
+</body>
+</html>

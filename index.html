@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Computer Online</title>
+  <style>
+    /* Basic reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Header and logo styling */
+    header {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        width: 50px;
+        height: auto;
+        margin-right: 10px;
+    }
+
+    /* Navigation and menu bar styling */
+    nav {
+        display: flex;
+        gap: 15px;
+    }
+
+    .menu-bar {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .menu-bar a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        font-size: 1rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .menu-bar a:hover {
+        background-color: #b8351efa;
+        border-radius: 4px;
+    }
+
+    /* Dropdown styling */
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 35px;
+        background-color: #45a049;
+        min-width: 150px;
+        border-radius: 4px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: white;
+        padding: 10px;
+        display: block;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #b8351efa;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Hamburger menu for mobile */
+    .hamburger {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: white;
+    }
+
+    /* Responsive styling */
+    @media (max-width: 600px) {
+        .menu-bar {
+            display: none;
+            flex-direction: column;
+            background-color: #4CAF50;
+            position: absolute;
+            top: 60px;
+            width: 80%;
+            left: 0;
+        }
+
+        .menu-bar a {
+            padding: 15px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .hamburger {
+            display: block;
+        }
+    }
+
+    /* Hero and content styles */
+    .hero {
+        background-image: url('com.jpg');
+        background-size: cover;
+        background-position: center;
+        padding: 60px 20px;
+        color: white;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .courses {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 20px;
+    }
+
+    .course-item {
+        margin: 10px;
+        flex-basis: calc(33% - 20px);
+        background-color: #f5f5f5;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .course-item:hover {
+        transform: scale(1.05);
+    }
+
+    .course-item img {
+        width: 100%;
+        height: auto;
+        border-bottom: 2px solid #4CAF50;
+    }
+
+    /* Footer styling */
+    .footer-logo {
+        width: 30px;
+        height: auto;
+        background-color:#86b83dfa;
+    }
+
+    /* Modal styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        transition: opacity 0.3s ease;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 500px;
+        position: relative;
+    }
+
+    .modal-content span {
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .modal-content span:hover,
+    .modal-content span:focus {
+        color: black;
+    }
+</style>
+
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <img src="logo.jpg" alt="Logo" class="logo">
+        <h1>Learn Computer Online</h1>
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+        <nav class="menu-bar">
+            <a href="index.html">Home</a>
+            <a href="courses.html">Courses</a>
+            <a href="blog.html">Blog</a>
+            <a href="resources.html">Resources</a>
+            <a href="contact.html">Contact</a>
+            <a href="signin.html">Join the community</a>
+            <!-- Add Chat Link -->
+            <a href="cri.html">Chat</a>
+            <div class="dropdown">
+                <a href="javascript:void(0)">More</a>
+                <div class="dropdown-content">
+                    <a href="about.html">About Us</a>
+                    <a href="faq.html">FAQ</a>
+                    <a href="contact.html">Support</a>
+                    <a href="signin.html">Sign In</a>
+                </div>
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchBar" placeholder="Search courses..." onkeyup="filterCourses()">
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Welcome to Learn Computer Online</h2>
+        <p>Your journey to mastering computers starts here.</p>
+    </section>
+
+    <!-- Main Content Section -->
+    <main>
+        <section class="courses">
+            <h3>Popular Courses</h3>
+            <div class="course-list" id="courseList">
+                <div class="course-item" data-title="Introduction to Computers">
+                    <img src="hh.jpg" alt="Introduction to Computer">
+                    <h4>Introduction to Computers</h4>
+                    <p>Beginner level course to understand the basics.</p>
+                    <button onclick="showCourseDetails('Introduction to Computers', 'Learn about hardware, software, and basic troubleshooting skills.')">Learn More</button>
+                </div>
+                <div class="course-item" data-title="Web Development">
+                    <img src="html.jpg" alt="Web Development">
+                    <h4>Web Development</h4>
+                    <p>Learn to build websites from scratch.</p>
+                    <button onclick="showCourseDetails('Web Development', 'This course covers HTML, CSS, and JavaScript.')">Learn More</button>
+                </div>
+                <div class="course-item" data-title="Programming in Python">
+                    <img src="py.jpg" alt="Programming in Python">
+                    <h4>Programming in Python</h4>
+                    <p>Master Python programming with this course.</p>
+                    <button onclick="showCourseDetails('Programming in Python', 'Learn Python programming, including data structures and algorithms.')">Learn More</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <h3>Subscribe to our Newsletter</h3>
+        <form id="subscriptionForm" action="#" method="post">
+            <input type="email" placeholder="Enter your email" name="email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+        <div id="subscriptionMessage"></div>
+        <p>&copy; 2024 <img src="logo.jpg" alt="Footer Logo" class="footer-logo"> Learn Computer Online. All rights reserved.</p>
+    </footer>
+
+    <!-- Modal Structure -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+    // Toggle mobile menu visibility
+    function toggleMenu() {
+        const menuBar = document.querySelector('.menu-bar');
+        menuBar.style.display = menuBar.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    // Show course details in modal
+    function showCourseDetails(title, description) {
+        document.getElementById("modalTitle").innerText = title;
+        document.getElementById("modalDescription").innerText = description;
+        document.getElementById("courseModal").style.display = "block";
+    }
+
+    // Close modal
+    function closeModal() {
+        document.getElementById("courseModal").style.display = "none";
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        const modal = document.getElementById("courseModal");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Subscription form handling
+    document.getElementById("subscriptionForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the form from refreshing the page
+
+        // Simulate successful subscription
+        const messageDiv = document.getElementById("subscriptionMessage");
+        messageDiv.textContent = "Thank you for subscribing!";
+        messageDiv.style.color = "green";
+
+        // Clear the input field
+        this.reset();
+    });
+</script>

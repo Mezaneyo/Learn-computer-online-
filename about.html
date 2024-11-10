@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Learn Computer Online</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+            margin-left: 20px; /* Margin to separate from the header title */
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            font-size: 1rem;
+        }
+
+        nav a:hover {
+            background-color: #45a049;
+            border-radius: 4px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Learn Computer Online</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="courses.html">Courses</a>
+            <a href="blog.html">Blog</a>
+            <a href="resources.html">Resources</a>
+            <a href="contact.html">Contact</a>
+            <a href="about.html">About Us</a>
+            <span class="auth-link" onclick="openModal('signInModal')">Sign In</span>
+            <span class="auth-link" onclick="openModal('signUpModal')">Sign Up</span>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2>About Us</h2>
+            <p>At Learn Computer Online, we are dedicated to providing high-quality online education for individuals looking to enhance their computer skills. Our team consists of experienced educators and industry professionals committed to delivering the best learning experience.</p>
+        </div>
+
+        <div class="section">
+            <h2>Why Choose Us?</h2>
+            <p>We stand out from other online learning platforms due to our personalized approach to education. We offer:</p>
+            <ul>
+                <li>Comprehensive courses tailored to various skill levels.</li>
+                <li>Interactive learning modules that make complex concepts easy to understand.</li>
+                <li>Access to experienced instructors for guidance and support.</li>
+                <li>A flexible learning environment that allows you to learn at your own pace.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>How to Access Our Courses</h2>
+            <p>Accessing our courses is simple:</p>
+            <ol>
+                <li>Visit our <a href="courses.html">Courses</a> page to explore available options.</li>
+                <li>Create an account or log in if you already have one.</li>
+                <li>Select a course that interests you and enroll.</li>
+                <li>Start learning! You can access your courses anytime and from anywhere.</li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h2>Pricing</h2>
+            <p>We offer competitive pricing to ensure that our courses are accessible to everyone. Our pricing structure includes:</p>
+            <ul>
+                <li>Individual courses at affordable rates.</li>
+                <li>Subscription plans for unlimited access to all courses.</li>
+                <li>Discounts for early registrations and group enrollments.</li>
+            </ul>
+            <p>For detailed pricing information, please visit our <a href="pricing.html">Pricing</a> page.</p>
+        </div>
+
+        <div class="section">
+            <h2>Our Aim</h2>
+            <p>Our aim is to empower individuals through education. We believe that everyone should have access to quality learning resources. By offering diverse courses and an engaging learning platform, we strive to help our students achieve their personal and professional goals.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Learn Computer Online. All rights reserved.</p>
+    </footer>
+
+    <div id="signInModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('signInModal')">&times;</span>
+            <h2>Sign In</h2>
+            <form id="signInForm" class="form-container">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Sign In</button>
+                <p class="auth-link" onclick="switchToSignUp()">Don't have an account? Sign Up</p>
+            </form>
+        </div>
+    </div>
+
+    <div id="signUpModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('signUpModal')">&times;</span>
+            <h2>Sign Up</h2>
+            <form id="signUpForm" class="form-container">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Sign Up</button>
+                <p class="auth-link" onclick="switchToSignIn()">Already have an account? Sign In</p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        function switchToSignUp() {
+            closeModal('signInModal');
+            openModal('signUpModal');
+        }
+
+        function switchToSignIn() {
+            closeModal('signUpModal');
+            openModal('signInModal');
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains("modal")) {
+                event.target.style.display = "none";
+            }
+        }
+
+        document.getElementById("signInForm").onsubmit = function(event) {
+            event.preventDefault();
+            alert("Sign in form submitted");
+        };
+
+        document.getElementById("signUpForm").onsubmit = function(event) {
+            event.preventDefault();
+            alert("Sign up form submitted");
+        };
+    </script>
+</body>
+</html>

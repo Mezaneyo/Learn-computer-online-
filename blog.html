@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Learn Computer Online</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .search-container {
+            margin-top: 10px;
+        }
+
+        .search-container form {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .search-container input[type="text"] {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 200px;
+        }
+
+        .search-container button {
+            padding: 8px 12px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-left: 5px;
+            border-radius: 4px;
+        }
+
+        .search-container button:hover {
+            background-color: #555;
+        }
+
+        /* Blog layout */
+        .blog-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .blog-posts {
+            flex: 3;
+            margin-right: 20px;
+        }
+
+        .blog-posts h2 {
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+        }
+
+        article {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        article h3 {
+            color: #333;
+        }
+
+        article p {
+            color: #666;
+        }
+
+        article a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        article a:hover {
+            text-decoration: underline;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            flex: 1;
+            background-color: #f2f2f2;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .sidebar ul li a:hover {
+            text-decoration: underline;
+            color: #4CAF50;
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Learn Computer Online</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="courses.html">Courses</a>
+            <a href="blog.html">Blog</a>
+            <a href="resources.html">Resources</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="search-container">
+            <form action="#" method="GET">
+                <input type="text" placeholder="Search articles..." name="search" required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        <div class="blog-container">
+            <div class="blog-posts">
+                <h2>Latest Articles</h2>
+                <article>
+                    <h3>Getting Started with Python</h3>
+                    <p>Python is a versatile language that is easy to learn and widely used in various applications. In this article, we will explore how to get started with Python programming.</p>
+                    <a href="#">Read more</a>
+                </article>
+                <article>
+                    <h3>Web Development Trends in 2024</h3>
+                    <p>Stay updated with the latest trends in web development, including frameworks, tools, and practices that are shaping the industry.</p>
+                    <a href="#">Read more</a>
+                </article>
+                <!-- Add more blog posts as needed -->
+            </div>
+
+            <aside class="sidebar">
+                <h2>Categories</h2>
+                <ul>
+                    <li><a href="#">Programming</a></li>
+                    <li><a href="#">Web Development</a></li>
+                    <li><a href="#">Data Science</a></li>
+                    <li><a href="#">Tips & Tricks</a></li>
+                </ul>
+
+                <h2>Recent Posts</h2>
+                <ul>
+                    <li><a href="#">How to Learn JavaScript in 30 Days</a></li>
+                    <li><a href="#">Top 10 Python Libraries for 2024</a></li>
+                </ul>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Learn Computer Online. All rights reserved.</p>
+    </footer>
+</body>
+</html>
