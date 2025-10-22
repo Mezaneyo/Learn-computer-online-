@@ -4,194 +4,956 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Courses - Learn Computer Online</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Basic styling for layout, modal, responsive design */
-      /*  body {
-            font-family: Arial, sans-serif;
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary: #2c5aa0;
+            --primary-dark: #1e3d72;
+            --secondary: #ff6b35;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --success: #28a745;
+            --danger: #dc3545;
+            --border-radius: 10px;
+            --box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset and base styles */
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        header, footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #333;
-            color: #fff;
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
         }
-        nav a {
-            margin: 0 10px;
-            color: #fff;
-            text-decoration: none;
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        .course-list {
+
+        .header-container {
             display: flex;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 20px;
-            padding: 20px;
+            font-weight: bold;
+            color: var(--primary);
         }
-        .course-item {
-            border: 1px solid #ccc;
-            padding: 15px;
-            width: 300px;
+
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Main content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
             text-align: center;
-            background-color: #f9f9f9;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
         }
-        /* Modal styles */
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Filter section */
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        #courseFilter {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            border: 1px solid #e1e5eb;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        #courseFilter:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.2);
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            background-color: white;
+            border: 1px solid #e1e5eb;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Course grid */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .course-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-image {
+            height: 180px;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 3rem;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .course-content p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .course-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .course-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(44, 90, 160, 0.1);
+        }
+
+        /* FAQ section */
+        .faq-section {
+            margin-top: 4rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .faq-question:hover {
+            background-color: #f8f9fa;
+        }
+
+        .faq-question h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .faq-icon {
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--gray);
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
         }
+
         .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-            text-align: left;
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 700px;
+            padding: 2rem;
             position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s ease;
         }
-        .close {
-            color: #aaa;
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-modal {
             position: absolute;
-            right: 15px;
-            top: 10px;
-            font-size: 28px;
-            font-weight: bold;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
             cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
         }
-        /* Filter input styles */
-        #courseFilter {
-            margin: 20px auto;
-            display: block;
-            padding: 8px;
-            width: 80%;
-            max-width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+
+        .close-modal:hover {
+            color: var(--dark);
         }
-        /* FAQ section */
-        .faq {
-            margin: 20px;
+
+        .modal-header {
+            margin-bottom: 1.5rem;
         }
-        .faq-item {
-            margin-bottom: 10px;
+
+        .modal-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
         }
-        .faq-item h3 {
-            cursor: pointer;
-            color: #333;
+
+        .modal-body {
+            margin-bottom: 2rem;
         }
-        .faq-item p.answer {
-            display: none;
-            padding-left: 20px;
-            color: #555;
-        }*/
+
+        .modal-body p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .modal-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-item i {
+            color: var(--success);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .course-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .filter-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-container {
+                max-width: 100%;
+            }
+            
+            .modal-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            main {
+                padding: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .course-actions {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Header Section -->
     <header>
-        <h1>Learn Computer Online</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="courses.html">Courses</a>
-            <a href="blog.html">Blog</a>
-            <a href="resources.html">Resources</a>
-            <a href="contact.html">Contact</a>
-        </nav>
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo">LCO</div>
+                <div class="site-title">Learn Computer Online</div>
+            </div>
+            
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="courses.html" class="active">Courses</a>
+                <a href="blog.html">Blog</a>
+                <a href="resources.html">Resources</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
     </header>
 
     <!-- Main Content Section -->
     <main>
-        <h2>Our Courses</h2>
-        
-        <!-- Course Filter Input -->
-        <input type="text" id="courseFilter" placeholder="Filter courses..." onkeyup="filterCourses()">
-        
-        <!-- Course List Section -->
-        <div class="course-list">
-            <div class="course-item">
-                <h3>Introduction to Python</h3>
-                <p>Learn the basics of Python programming, including syntax, data types, and more.</p>
-                <button onclick="openModal('Introduction to Python', 'A beginner-friendly course to get started with Python programming.')">Learn More</button>
+        <div class="page-header">
+            <h1>Explore Our Courses</h1>
+            <p>Discover a wide range of computer science courses designed to help you master new skills and advance your career</p>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="courseFilter" placeholder="Search courses...">
             </div>
-            <div class="course-item">
-                <h3>Web Development Bootcamp</h3>
-                <p>Become a web developer with our comprehensive bootcamp covering HTML, CSS, JavaScript, and more.</p>
-                <button onclick="openModal('Web Development Bootcamp', 'Learn to build responsive websites from scratch using HTML, CSS, and JavaScript.')">Learn More</button>
+            
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">All Courses</button>
+                <button class="filter-btn" data-filter="beginner">Beginner</button>
+                <button class="filter-btn" data-filter="intermediate">Intermediate</button>
+                <button class="filter-btn" data-filter="advanced">Advanced</button>
             </div>
-            <div class="course-item">
-                <h3>Data Science with R</h3>
-                <p>Master data science techniques using R programming, including data manipulation and visualization.</p>
-                <button onclick="openModal('Data Science with R', 'This course covers data manipulation, visualization, and analysis using R.')">Learn More</button>
+        </div>
+
+        <!-- Course Grid -->
+        <div class="course-grid" id="courseList">
+            <div class="course-card" data-level="beginner">
+                <div class="course-image">
+                    <i class="fab fa-python"></i>
+                </div>
+                <div class="course-content">
+                    <h3>Introduction to Python</h3>
+                    <p>Learn the basics of Python programming, including syntax, data types, control structures, and functions. Perfect for absolute beginners.</p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> 6 weeks</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                    </div>
+                    <div class="course-actions">
+                        <button class="btn btn-primary" onclick="openModal('Introduction to Python', 'This beginner-friendly course will introduce you to the fundamentals of Python programming. You will learn about variables, data types, control structures, functions, and basic algorithms. By the end of the course, you will be able to write simple Python programs and understand the core concepts of programming.')">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-shopping-cart"></i> Enroll
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="course-card" data-level="intermediate">
+                <div class="course-image">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="course-content">
+                    <h3>Web Development Bootcamp</h3>
+                    <p>Become a full-stack web developer with our comprehensive bootcamp covering HTML, CSS, JavaScript, and backend technologies.</p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> 12 weeks</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                    </div>
+                    <div class="course-actions">
+                        <button class="btn btn-primary" onclick="openModal('Web Development Bootcamp', 'This comprehensive bootcamp will take you from beginner to job-ready web developer. You will learn HTML5, CSS3, JavaScript, responsive design, and modern frameworks like React. The course also covers backend development with Node.js and databases. By the end, you will have built a portfolio of real-world projects.')">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-shopping-cart"></i> Enroll
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="course-card" data-level="intermediate">
+                <div class="course-image">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="course-content">
+                    <h3>Data Science with R</h3>
+                    <p>Master data science techniques using R programming, including data manipulation, visualization, and statistical analysis.</p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> 8 weeks</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                    </div>
+                    <div class="course-actions">
+                        <button class="btn btn-primary" onclick="openModal('Data Science with R', 'This course covers data manipulation, visualization, and analysis using R. You will learn how to import, clean, and transform data, create insightful visualizations, and perform statistical analysis. The course also introduces machine learning concepts and how to apply them using R.')">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-shopping-cart"></i> Enroll
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="course-card" data-level="beginner">
+                <div class="course-image">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="course-content">
+                    <h3>SQL Fundamentals</h3>
+                    <p>Learn how to work with databases using SQL. Master queries, joins, and database design principles.</p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> 4 weeks</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                    </div>
+                    <div class="course-actions">
+                        <button class="btn btn-primary" onclick="openModal('SQL Fundamentals', 'This course teaches you how to work with relational databases using SQL. You will learn to write complex queries, use joins to combine data from multiple tables, and understand database design principles. Practical exercises will help you apply these concepts to real-world scenarios.')">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-shopping-cart"></i> Enroll
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="course-card" data-level="advanced">
+                <div class="course-image">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="course-content">
+                    <h3>Machine Learning</h3>
+                    <p>Dive into the world of machine learning with Python. Learn algorithms, model evaluation, and real-world applications.</p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> 10 weeks</span>
+                        <span><i class="fas fa-signal"></i> Advanced</span>
+                    </div>
+                    <div class="course-actions">
+                        <button class="btn btn-primary" onclick="openModal('Machine Learning', 'This advanced course covers the fundamentals of machine learning using Python. You will learn about different types of machine learning algorithms, how to evaluate model performance, and apply these techniques to real-world problems. The course includes hands-on projects to reinforce your learning.')">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-shopping-cart"></i> Enroll
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="course-card" data-level="intermediate">
+                <div class="course-image">
+                    <i class="fab fa-js-square"></i>
+                </div>
+                <div class="course-content">
+                    <h3>JavaScript Advanced Concepts</h3>
+                    <p>Deepen your JavaScript knowledge with advanced topics like closures, prototypes, async programming, and modern ES6+ features.</p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> 6 weeks</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                    </div>
+                    <div class="course-actions">
+                        <button class="btn btn-primary" onclick="openModal('JavaScript Advanced Concepts', 'Take your JavaScript skills to the next level with this intermediate course. You will explore advanced concepts like closures, prototypes, asynchronous programming, and modern ES6+ features. The course includes practical exercises to help you master these concepts and write more efficient JavaScript code.')">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-shopping-cart"></i> Enroll
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- FAQ Section -->
-        <section class="faq">
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-item">
-                <h3 onclick="toggleAnswer(this)">What is the duration of each course?</h3>
-                <p class="answer">Most courses take 4-6 weeks to complete, with weekly assignments.</p>
+        <section class="faq-section">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about our courses and learning platform</p>
             </div>
-            <div class="faq-item">
-                <h3 onclick="toggleAnswer(this)">Do I get a certificate after completing a course?</h3>
-                <p class="answer">Yes, a certificate is provided upon successful completion of each course.</p>
-            </div>
-            <div class="faq-item">
-                <h3 onclick="toggleAnswer(this)">Can I access the course material at any time?</h3>
-                <p class="answer">Yes, once enrolled, you have 24/7 access to the course material.</p>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What is the duration of each course?</h3>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Course durations vary depending on the subject and complexity. Most courses take 4-8 weeks to complete, with weekly assignments and projects. Each course includes detailed timelines to help you plan your learning journey.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Do I get a certificate after completing a course?</h3>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, a verified certificate is provided upon successful completion of each course. Our certificates are recognized by industry partners and can be shared on LinkedIn and other professional platforms.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Can I access the course material at any time?</h3>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, once enrolled, you have 24/7 access to all course materials, including video lectures, readings, and assignments. You can learn at your own pace and revisit materials as needed.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Are there any prerequisites for the courses?</h3>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Prerequisites vary by course. Beginner courses typically require no prior knowledge, while intermediate and advanced courses may require foundational understanding of the subject. Each course listing clearly states any prerequisites.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What kind of support is available during the course?</h3>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We provide multiple support channels including discussion forums, Q&A sessions with instructors, and peer-to-peer learning communities. Our support team is also available to help with technical issues.</p>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- Modal Structure -->
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Learn Computer Online</h3>
+                <p>Your premier destination for computer education. We provide high-quality courses for all skill levels.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="contact.html">Contact Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Learning St, Education City</li>
+                    <li><i class="fas fa-phone"></i> +265 (0) 995514049</li>
+                    <li><i class="fas fa-envelope"></i> info@learncomputeronline.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Learn Computer Online. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Course Details Modal -->
     <div id="courseModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle"></h2>
-            <p id="modalDescription"></p>
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle">Course Title</h2>
+            </div>
+            <div class="modal-body">
+                <p id="modalDescription">Course description will appear here.</p>
+                
+                <div class="modal-features">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Self-paced learning</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Certificate of completion</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Lifetime access</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Expert instructor support</span>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeModal()">Close</button>
+                    <button class="btn btn-primary">Enroll Now</button>
+                </div>
+            </div>
         </div>
     </div>
-
-    <!-- Footer Section -->
-    <footer>
-        <p>&copy; 2024 Learn Computer Online. All rights reserved.</p>
-    </footer>
 
     <script>
         // Course Filter Function
         function filterCourses() {
-            var input = document.getElementById('courseFilter');
-            var filter = input.value.toLowerCase();
-            var courseItems = document.getElementsByClassName('course-item');
+            const input = document.getElementById('courseFilter');
+            const filter = input.value.toLowerCase();
+            const courseItems = document.getElementsByClassName('course-card');
             
-            for (var i = 0; i < courseItems.length; i++) {
-                var courseTitle = courseItems[i].getElementsByTagName("h3")[0];
+            for (let i = 0; i < courseItems.length; i++) {
+                const courseTitle = courseItems[i].getElementsByTagName("h3")[0];
                 if (courseTitle) {
-                    var txtValue = courseTitle.textContent || courseTitle.innerText;
+                    const txtValue = courseTitle.textContent || courseTitle.innerText;
                     courseItems[i].style.display = txtValue.toLowerCase().includes(filter) ? "" : "none";
                 }
             }
         }
 
+        // Level Filter Functionality
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                const courseItems = document.getElementsByClassName('course-card');
+                
+                for (let i = 0; i < courseItems.length; i++) {
+                    if (filter === 'all') {
+                        courseItems[i].style.display = '';
+                    } else {
+                        const level = courseItems[i].getAttribute('data-level');
+                        courseItems[i].style.display = level === filter ? '' : 'none';
+                    }
+                }
+            });
+        });
+
         // Modal Functionality
-        var modal = document.getElementById("courseModal");
+        const modal = document.getElementById("courseModal");
 
         function openModal(title, description) {
             document.getElementById("modalTitle").innerText = title;
             document.getElementById("modalDescription").innerText = description;
-            modal.style.display = "block";
+            modal.style.display = "flex";
         }
 
         function closeModal() {
@@ -199,17 +961,23 @@
         }
 
         // Close modal when clicking outside
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                closeModal();
             }
-        }
+        });
 
         // FAQ Toggle Functionality
-        function toggleAnswer(questionElement) {
-            var answer = questionElement.nextElementSibling;
-            answer.style.display = answer.style.display === "none" ? "block" : "none";
+        function toggleFAQ(questionElement) {
+            const faqItem = questionElement.parentElement;
+            faqItem.classList.toggle('active');
         }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listener for search input
+            document.getElementById('courseFilter').addEventListener('input', filterCourses);
+        });
     </script>
 </body>
 </html>

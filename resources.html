@@ -4,46 +4,933 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resources - Learn Computer Online</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary: #2c5aa0;
+            --primary-dark: #1e3d72;
+            --secondary: #ff6b35;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --success: #28a745;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Main content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Resource categories */
+        .resource-categories {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: white;
+            border: 1px solid #e1e5eb;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Resource sections */
+        .resource-section {
+            margin-bottom: 3rem;
+            display: none;
+        }
+
+        .resource-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        /* Resource grid */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .resource-icon {
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        .resource-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .resource-description {
+            color: var(--gray);
+            margin-bottom: 1.2rem;
+            flex: 1;
+        }
+
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            justify-content: center;
+        }
+
+        .resource-link:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* All resources section */
+        .all-resources {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .resource-grid, .all-resources {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            main {
+                padding: 1rem;
+            }
+            
+            .resource-categories {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .category-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header Section -->
     <header>
-        <h1>Learn Computer Online</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="courses.html">Courses</a>
-            <a href="blog.html">Blog</a>
-            <a href="resources.html">Resources</a>
-            <a href="contact.html">Contact</a>
-        </nav>
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo">LCO</div>
+                <div class="site-title">Learn Computer Online</div>
+            </div>
+            
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="blog.html">Blog</a>
+                <a href="resources.html" class="active">Resources</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
     </header>
 
     <!-- Main Content Section -->
     <main>
-        <h2>Resources</h2>
-        <h3>Books</h3>
-        <ul>
-            <li><a href="https://example.com/book1" target="_blank">Book Title 1</a> - A great book about programming.</li>
-            <li><a href="https://example.com/book2" target="_blank">Book Title 2</a> - A comprehensive guide to web development.</li>
-        </ul>
+        <div class="page-header">
+            <h1>Learning Resources</h1>
+            <p>Explore our curated collection of books, websites, videos, and tools to enhance your computer science journey.</p>
+        </div>
 
-        <h3>Websites</h3>
-        <ul>
-            <li><a href="https://www.w3schools.com" target="_blank">W3Schools</a> - Online tutorials for web development.</li>
-            <li><a href="https://www.freecodecamp.org" target="_blank">FreeCodeCamp</a> - Learn to code for free.</li>
-        </ul>
+        <!-- Resource Categories -->
+        <div class="resource-categories">
+            <button class="category-btn active" data-category="all">All Resources</button>
+            <button class="category-btn" data-category="books">Books</button>
+            <button class="category-btn" data-category="websites">Websites</button>
+            <button class="category-btn" data-category="videos">Videos</button>
+            <button class="category-btn" data-category="tools">Tools</button>
+        </div>
 
-        <h3>Videos</h3>
-        <ul>
-            <li><a href="https://youtube.com/example1" target="_blank">YouTube Channel 1</a> - Tutorials on Python programming.</li>
-            <li><a href="https://youtube.com/example2" target="_blank">YouTube Channel 2</a> - Web development tips and tricks.</li>
-        </ul>
+        <!-- All Resources Section -->
+        <div class="resource-section active" id="all-resources">
+            <h2 class="section-title">All Learning Resources</h2>
+            <div class="all-resources">
+                <!-- Books -->
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Python Crash Course</h3>
+                        <p class="resource-description">A hands-on, project-based introduction to programming. Perfect for beginners who want to build practical applications.</p>
+                        <div class="resource-meta">
+                            <span>Book</span>
+                            <span>Beginner</span>
+                        </div>
+                        <a href="https://example.com/book1" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> View Resource
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Eloquent JavaScript</h3>
+                        <p class="resource-description">A modern introduction to programming with JavaScript. Covers everything from basics to advanced concepts.</p>
+                        <div class="resource-meta">
+                            <span>Book</span>
+                            <span>Intermediate</span>
+                        </div>
+                        <a href="https://example.com/book2" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> View Resource
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Websites -->
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">W3Schools</h3>
+                        <p class="resource-description">The world's largest web developer site with tutorials and references for web development technologies.</p>
+                        <div class="resource-meta">
+                            <span>Website</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://www.w3schools.com" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> Visit Website
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">FreeCodeCamp</h3>
+                        <p class="resource-description">Learn to code for free with thousands of interactive coding challenges and projects.</p>
+                        <div class="resource-meta">
+                            <span>Website</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://www.freecodecamp.org" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> Visit Website
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Videos -->
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Corey Schafer - Python</h3>
+                        <p class="resource-description">Comprehensive Python tutorials covering fundamentals to advanced topics with clear explanations.</p>
+                        <div class="resource-meta">
+                            <span>Video</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://youtube.com/example1" target="_blank" class="resource-link">
+                            <i class="fab fa-youtube"></i> Watch Videos
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Traversy Media</h3>
+                        <p class="resource-description">Web development and programming tutorials focusing on modern technologies and best practices.</p>
+                        <div class="resource-meta">
+                            <span>Video</span>
+                            <span>Intermediate</span>
+                        </div>
+                        <a href="https://youtube.com/example2" target="_blank" class="resource-link">
+                            <i class="fab fa-youtube"></i> Watch Videos
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tools -->
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Visual Studio Code</h3>
+                        <p class="resource-description">A lightweight but powerful source code editor with built-in support for JavaScript, TypeScript, and Node.js.</p>
+                        <div class="resource-meta">
+                            <span>Tool</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://code.visualstudio.com" target="_blank" class="resource-link">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">GitHub</h3>
+                        <p class="resource-description">The world's leading software development platform for version control and collaboration.</p>
+                        <div class="resource-meta">
+                            <span>Tool</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://github.com" target="_blank" class="resource-link">
+                            <i class="fab fa-github"></i> Visit GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Books Section -->
+        <div class="resource-section" id="books-section">
+            <h2 class="section-title">Recommended Books</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Python Crash Course</h3>
+                        <p class="resource-description">A hands-on, project-based introduction to programming. Perfect for beginners who want to build practical applications.</p>
+                        <div class="resource-meta">
+                            <span>Book</span>
+                            <span>Beginner</span>
+                        </div>
+                        <a href="https://example.com/book1" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> View Book
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Eloquent JavaScript</h3>
+                        <p class="resource-description">A modern introduction to programming with JavaScript. Covers everything from basics to advanced concepts.</p>
+                        <div class="resource-meta">
+                            <span>Book</span>
+                            <span>Intermediate</span>
+                        </div>
+                        <a href="https://example.com/book2" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> View Book
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Clean Code</h3>
+                        <p class="resource-description">A handbook of agile software craftsmanship that teaches you how to write clean, maintainable code.</p>
+                        <div class="resource-meta">
+                            <span>Book</span>
+                            <span>Advanced</span>
+                        </div>
+                        <a href="https://example.com/book3" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> View Book
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">The Pragmatic Programmer</h3>
+                        <p class="resource-description">Your journey to mastery with this timeless classic. Learn the best practices of software development.</p>
+                        <div class="resource-meta">
+                            <span>Book</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://example.com/book4" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> View Book
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Websites Section -->
+        <div class="resource-section" id="websites-section">
+            <h2 class="section-title">Learning Websites</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">W3Schools</h3>
+                        <p class="resource-description">The world's largest web developer site with tutorials and references for web development technologies.</p>
+                        <div class="resource-meta">
+                            <span>Website</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://www.w3schools.com" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> Visit Website
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">FreeCodeCamp</h3>
+                        <p class="resource-description">Learn to code for free with thousands of interactive coding challenges and projects.</p>
+                        <div class="resource-meta">
+                            <span>Website</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://www.freecodecamp.org" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> Visit Website
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">MDN Web Docs</h3>
+                        <p class="resource-description">Comprehensive documentation for web technologies including HTML, CSS, and JavaScript.</p>
+                        <div class="resource-meta">
+                            <span>Website</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://developer.mozilla.org" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> Visit Website
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Stack Overflow</h3>
+                        <p class="resource-description">The largest online community for developers to learn, share knowledge, and build their careers.</p>
+                        <div class="resource-meta">
+                            <span>Website</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://stackoverflow.com" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> Visit Website
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Videos Section -->
+        <div class="resource-section" id="videos-section">
+            <h2 class="section-title">Video Tutorials</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Corey Schafer - Python</h3>
+                        <p class="resource-description">Comprehensive Python tutorials covering fundamentals to advanced topics with clear explanations.</p>
+                        <div class="resource-meta">
+                            <span>Video</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://youtube.com/example1" target="_blank" class="resource-link">
+                            <i class="fab fa-youtube"></i> Watch Videos
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Traversy Media</h3>
+                        <p class="resource-description">Web development and programming tutorials focusing on modern technologies and best practices.</p>
+                        <div class="resource-meta">
+                            <span>Video</span>
+                            <span>Intermediate</span>
+                        </div>
+                        <a href="https://youtube.com/example2" target="_blank" class="resource-link">
+                            <i class="fab fa-youtube"></i> Watch Videos
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">The Net Ninja</h3>
+                        <p class="resource-description">Clear, concise tutorials on web development, JavaScript frameworks, and modern web technologies.</p>
+                        <div class="resource-meta">
+                            <span>Video</span>
+                            <span>Beginner</span>
+                        </div>
+                        <a href="https://youtube.com/example3" target="_blank" class="resource-link">
+                            <i class="fab fa-youtube"></i> Watch Videos
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Academind</h3>
+                        <p class="resource-description">High-quality tutorials on web development, JavaScript, React, Node.js and other modern technologies.</p>
+                        <div class="resource-meta">
+                            <span>Video</span>
+                            <span>Intermediate</span>
+                        </div>
+                        <a href="https://youtube.com/example4" target="_blank" class="resource-link">
+                            <i class="fab fa-youtube"></i> Watch Videos
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tools Section -->
+        <div class="resource-section" id="tools-section">
+            <h2 class="section-title">Development Tools</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Visual Studio Code</h3>
+                        <p class="resource-description">A lightweight but powerful source code editor with built-in support for JavaScript, TypeScript, and Node.js.</p>
+                        <div class="resource-meta">
+                            <span>Tool</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://code.visualstudio.com" target="_blank" class="resource-link">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">GitHub</h3>
+                        <p class="resource-description">The world's leading software development platform for version control and collaboration.</p>
+                        <div class="resource-meta">
+                            <span>Tool</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://github.com" target="_blank" class="resource-link">
+                            <i class="fab fa-github"></i> Visit GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">CodePen</h3>
+                        <p class="resource-description">An online community for testing and showcasing user-created HTML, CSS and JavaScript code snippets.</p>
+                        <div class="resource-meta">
+                            <span>Tool</span>
+                            <span>All Levels</span>
+                        </div>
+                        <a href="https://codepen.io" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> Visit CodePen
+                        </a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Chrome DevTools</h3>
+                        <p class="resource-description">A set of web developer tools built directly into the Google Chrome browser for debugging and optimization.</p>
+                        <div class="resource-meta">
+                            <span>Tool</span>
+                            <span>Intermediate</span>
+                        </div>
+                        <a href="https://developers.google.com/web/tools/chrome-devtools" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <!-- Footer Section -->
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Learn Computer Online. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Learn Computer Online</h3>
+                <p>Your premier destination for computer education. We provide high-quality courses for all skill levels.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="contact.html">Contact Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Learning St, Education City</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@learncomputeronline.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Learn Computer Online. All rights reserved.</p>
+        </div>
     </footer>
+
+    <script>
+        // Category filtering functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const resourceSections = document.querySelectorAll('.resource-section');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Get the category
+                    const category = this.getAttribute('data-category');
+                    
+                    // Show the appropriate section
+                    resourceSections.forEach(section => {
+                        if (category === 'all' || section.id === `${category}-section`) {
+                            section.classList.add('active');
+                        } else {
+                            section.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>

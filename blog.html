@@ -4,224 +4,849 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - Learn Computer Online</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Basic styling */
-        body {
-            font-family: Arial, sans-serif;
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary: #2c5aa0;
+            --primary-dark: #1e3d72;
+            --secondary: #ff6b35;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --success: #28a745;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset and base styles */
+        * {
             margin: 0;
             padding: 0;
-            color: #333;
-            background-color: #f9f9f9;
+            box-sizing: border-box;
         }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
         header {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 15px;
-            text-align: center;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        header h1 {
-            margin: 0;
-        }
-
-        nav {
-            margin-top: 10px;
-        }
-
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        .search-container {
-            margin-top: 10px;
-        }
-
-        .search-container form {
-            display: flex;
-            justify-content: center;
-            margin-top: 15px;
-        }
-
-        .search-container input[type="text"] {
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            width: 200px;
-        }
-
-        .search-container button {
-            padding: 8px 12px;
-            background-color: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-            margin-left: 5px;
-            border-radius: 4px;
-        }
-
-        .search-container button:hover {
-            background-color: #555;
-        }
-
-        /* Blog layout */
-        .blog-container {
+        .header-container {
             display: flex;
             justify-content: space-between;
-            padding: 20px;
+            align-items: center;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .blog-posts {
-            flex: 3;
-            margin-right: 20px;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .blog-posts h2 {
-            color: #4CAF50;
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 5px;
-        }
-
-        article {
+        .logo {
+            width: 50px;
+            height: 50px;
             background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        article h3 {
-            color: #333;
-        }
-
-        article p {
-            color: #666;
-        }
-
-        article a {
-            color: #4CAF50;
-            text-decoration: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: bold;
+            color: var(--primary);
         }
 
-        article a:hover {
-            text-decoration: underline;
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
-        /* Sidebar styling */
-        .sidebar {
-            flex: 1;
-            background-color: #f2f2f2;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        nav {
+            display: flex;
+            gap: 1.5rem;
         }
 
-        .sidebar h2 {
-            color: #4CAF50;
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 5px;
-            margin-top: 0;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            margin-bottom: 10px;
-        }
-
-        .sidebar ul li a {
-            color: #333;
-            text-decoration: none;
-        }
-
-        .sidebar ul li a:hover {
-            text-decoration: underline;
-            color: #4CAF50;
-        }
-
-        /* Footer styling */
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #4CAF50;
+        nav a {
             color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Main content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Blog layout */
+        .blog-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Blog posts */
+        .blog-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .blog-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .blog-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .blog-excerpt {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-widget {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .widget-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .categories-list, .recent-posts-list {
+            list-style: none;
+        }
+
+        .categories-list li, .recent-posts-list li {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .categories-list li:last-child, .recent-posts-list li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .categories-list a, .recent-posts-list a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .categories-list a:hover, .recent-posts-list a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .category-count {
+            background: var(--primary);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .search-widget {
+            display: flex;
+            margin-top: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid #e1e5eb;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .search-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 1.2rem;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-button:hover {
+            background: var(--primary-dark);
+        }
+
+        .tags-widget {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: #f8f9fa;
+            color: var(--dark);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .tag:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Newsletter widget */
+        .newsletter-widget {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .newsletter-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-text {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .newsletter-input {
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .newsletter-button {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-button:hover {
+            background: #e55a2b;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: white;
+            color: var(--dark);
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+        }
+
+        .page-link:hover, .page-link.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
             position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
             bottom: 0;
-            width: 100%;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-widget {
+                flex-direction: column;
+            }
+            
+            .search-input {
+                border-radius: var(--border-radius);
+                margin-bottom: 0.5rem;
+            }
+            
+            .search-button {
+                border-radius: var(--border-radius);
+                padding: 0.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            main {
+                padding: 1rem;
+            }
+            
+            .blog-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Header Section -->
     <header>
-        <h1>Learn Computer Online</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="courses.html">Courses</a>
-            <a href="blog.html">Blog</a>
-            <a href="resources.html">Resources</a>
-            <a href="contact.html">Contact</a>
-        </nav>
-        <div class="search-container">
-            <form action="#" method="GET">
-                <input type="text" placeholder="Search articles..." name="search" required>
-                <button type="submit">Search</button>
-            </form>
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo">LCO</div>
+                <div class="site-title">Learn Computer Online</div>
+            </div>
+            
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="blog.html" class="active">Blog</a>
+                <a href="resources.html">Resources</a>
+                <a href="contact.html">Contact</a>
+            </nav>
         </div>
     </header>
 
     <!-- Main Content Section -->
     <main>
+        <div class="page-header">
+            <h1>Our Blog</h1>
+            <p>Stay updated with the latest trends, tutorials, and insights in computer science and programming.</p>
+        </div>
+
         <div class="blog-container">
+            <!-- Blog Posts -->
             <div class="blog-posts">
-                <h2>Latest Articles</h2>
-                <article>
-                    <h3>Getting Started with Python</h3>
-                    <p>Python is a versatile language that is easy to learn and widely used in various applications. In this article, we will explore how to get started with Python programming.</p>
-                    <a href="#">Read more</a>
+                <h2 class="section-title">Latest Articles</h2>
+                
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> June 15, 2024</span>
+                            <span><i class="far fa-user"></i> John Smith</span>
+                            <span><i class="far fa-folder"></i> Programming</span>
+                        </div>
+                        <h3 class="blog-title">Getting Started with Python: A Beginner's Guide</h3>
+                        <p class="blog-excerpt">Python is a versatile language that is easy to learn and widely used in various applications. In this comprehensive guide, we'll explore how to get started with Python programming, from installation to writing your first script.</p>
+                        <a href="#" class="read-more">
+                            <i class="fas fa-arrow-right"></i> Read More
+                        </a>
+                    </div>
                 </article>
-                <article>
-                    <h3>Web Development Trends in 2024</h3>
-                    <p>Stay updated with the latest trends in web development, including frameworks, tools, and practices that are shaping the industry.</p>
-                    <a href="#">Read more</a>
+                
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> June 10, 2024</span>
+                            <span><i class="far fa-user"></i> Sarah Johnson</span>
+                            <span><i class="far fa-folder"></i> Web Development</span>
+                        </div>
+                        <h3 class="blog-title">Web Development Trends to Watch in 2024</h3>
+                        <p class="blog-excerpt">Stay updated with the latest trends in web development, including frameworks, tools, and practices that are shaping the industry. Discover what technologies are gaining traction and how they can benefit your projects.</p>
+                        <a href="#" class="read-more">
+                            <i class="fas fa-arrow-right"></i> Read More
+                        </a>
+                    </div>
                 </article>
-                <!-- Add more blog posts as needed -->
+                
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> June 5, 2024</span>
+                            <span><i class="far fa-user"></i> Michael Chen</span>
+                            <span><i class="far fa-folder"></i> Data Science</span>
+                        </div>
+                        <h3 class="blog-title">Introduction to Machine Learning with Python</h3>
+                        <p class="blog-excerpt">Machine learning is transforming industries worldwide. Learn the fundamentals of ML with Python, including key libraries like Scikit-learn and TensorFlow, and build your first predictive model.</p>
+                        <a href="#" class="read-more">
+                            <i class="fas fa-arrow-right"></i> Read More
+                        </a>
+                    </div>
+                </article>
+                
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <i class="fab fa-js-square"></i>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> May 28, 2024</span>
+                            <span><i class="far fa-user"></i> Emily Rodriguez</span>
+                            <span><i class="far fa-folder"></i> JavaScript</span>
+                        </div>
+                        <h3 class="blog-title">Modern JavaScript Features You Should Know</h3>
+                        <p class="blog-excerpt">JavaScript continues to evolve with new features and syntax improvements. Explore the latest ES2023 features that can make your code cleaner, more efficient, and easier to maintain.</p>
+                        <a href="#" class="read-more">
+                            <i class="fas fa-arrow-right"></i> Read More
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <a href="#" class="page-link active">1</a>
+                    <a href="#" class="page-link">2</a>
+                    <a href="#" class="page-link">3</a>
+                    <a href="#" class="page-link">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
             </div>
 
-            <aside class="sidebar">
-                <h2>Categories</h2>
-                <ul>
-                    <li><a href="#">Programming</a></li>
-                    <li><a href="#">Web Development</a></li>
-                    <li><a href="#">Data Science</a></li>
-                    <li><a href="#">Tips & Tricks</a></li>
-                </ul>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Search Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Search</h3>
+                    <div class="search-widget">
+                        <input type="text" class="search-input" placeholder="Search articles...">
+                        <button class="search-button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
 
-                <h2>Recent Posts</h2>
-                <ul>
-                    <li><a href="#">How to Learn JavaScript in 30 Days</a></li>
-                    <li><a href="#">Top 10 Python Libraries for 2024</a></li>
-                </ul>
-            </aside>
+                <!-- Categories Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Categories</h3>
+                    <ul class="categories-list">
+                        <li>
+                            <a href="#">
+                                Programming
+                                <span class="category-count">12</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Web Development
+                                <span class="category-count">8</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Data Science
+                                <span class="category-count">5</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                JavaScript
+                                <span class="category-count">7</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Tips & Tricks
+                                <span class="category-count">10</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Recent Posts Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Recent Posts</h3>
+                    <ul class="recent-posts-list">
+                        <li>
+                            <a href="#">Getting Started with Python: A Beginner's Guide</a>
+                        </li>
+                        <li>
+                            <a href="#">Web Development Trends to Watch in 2024</a>
+                        </li>
+                        <li>
+                            <a href="#">Introduction to Machine Learning with Python</a>
+                        </li>
+                        <li>
+                            <a href="#">Modern JavaScript Features You Should Know</a>
+                        </li>
+                        <li>
+                            <a href="#">How to Learn JavaScript in 30 Days</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Tags Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Popular Tags</h3>
+                    <div class="tags-widget">
+                        <a href="#" class="tag">Python</a>
+                        <a href="#" class="tag">JavaScript</a>
+                        <a href="#" class="tag">Web Development</a>
+                        <a href="#" class="tag">Machine Learning</a>
+                        <a href="#" class="tag">CSS</a>
+                        <a href="#" class="tag">HTML</a>
+                        <a href="#" class="tag">React</a>
+                        <a href="#" class="tag">Node.js</a>
+                    </div>
+                </div>
+
+                <!-- Newsletter Widget -->
+                <div class="sidebar-widget newsletter-widget">
+                    <h3 class="newsletter-title">Subscribe to Our Newsletter</h3>
+                    <p class="newsletter-text">Get the latest articles and updates delivered directly to your inbox.</p>
+                    <form class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="Your email address" required>
+                        <button type="submit" class="newsletter-button">Subscribe</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </main>
 
-    <!-- Footer Section -->
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Learn Computer Online. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Learn Computer Online</h3>
+                <p>Your premier destination for computer education. We provide high-quality courses for all skill levels.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="contact.html">Contact Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Learning St, Education City</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@learncomputeronline.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Learn Computer Online. All rights reserved.</p>
+        </div>
     </footer>
+
+    <script>
+        // Simple search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('.search-input');
+            const searchButton = document.querySelector('.search-button');
+            const blogCards = document.querySelectorAll('.blog-card');
+            
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                
+                blogCards.forEach(card => {
+                    const title = card.querySelector('.blog-title').textContent.toLowerCase();
+                    const excerpt = card.querySelector('.blog-excerpt').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || excerpt.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            searchButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                performSearch();
+            });
+            
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // Newsletter form submission
+            const newsletterForm = document.querySelector('.newsletter-form');
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('.newsletter-input').value;
+                alert(`Thank you for subscribing with ${email}! You'll receive our latest updates soon.`);
+                this.reset();
+            });
+        });
+    </script>
 </body>
 </html>

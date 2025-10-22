@@ -4,164 +4,792 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Learn Computer Online</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary: #2c5aa0;
+            --primary-dark: #1e3d72;
+            --secondary: #ff6b35;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --success: #28a745;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset and base styles */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
         header {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 10px 20px;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
             display: flex;
             align-items: center;
+            gap: 1rem;
         }
 
-        h1 {
-            margin: 0;
+        .logo {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
         nav {
             display: flex;
-            gap: 15px;
-            margin-left: 20px; /* Margin to separate from the header title */
+            gap: 1.5rem;
         }
 
         nav a {
             color: white;
             text-decoration: none;
-            padding: 8px 12px;
-            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
         }
 
-        nav a:hover {
-            background-color: #45a049;
-            border-radius: 4px;
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.15);
         }
 
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
+        .auth-links {
+            display: flex;
+            gap: 1rem;
         }
 
-        h2 {
-            color: #4CAF50;
-        }
-
-        .section {
-            margin-bottom: 30px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #4CAF50;
+        .auth-link {
             color: white;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .auth-link:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Main content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Content sections */
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .content-section p {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .content-section a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .content-section a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        /* Features grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* Team section */
+        .team-section {
+            text-align: center;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        .member-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .member-role {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Stats section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
             position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
             bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 450px;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--dark);
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .modal-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid #e1e5eb;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.2);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.9rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 90, 160, 0.3);
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--gray);
+        }
+
+        .auth-switch a {
+            color: var(--primary);
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .auth-switch a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .auth-links {
+                margin-top: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            main {
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Header Section -->
     <header>
-        <h1>Learn Computer Online</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="courses.html">Courses</a>
-            <a href="blog.html">Blog</a>
-            <a href="resources.html">Resources</a>
-            <a href="contact.html">Contact</a>
-            <a href="about.html">About Us</a>
-            <span class="auth-link" onclick="openModal('signInModal')">Sign In</span>
-            <span class="auth-link" onclick="openModal('signUpModal')">Sign Up</span>
-        </nav>
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo">LCO</div>
+                <div class="site-title">Learn Computer Online</div>
+            </div>
+            
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="blog.html">Blog</a>
+                <a href="resources.html">Resources</a>
+                <a href="contact.html">Contact</a>
+                <a href="about.html" class="active">About Us</a>
+            </nav>
+            
+            <div class="auth-links">
+                <span class="auth-link" onclick="openModal('signInModal')">Sign In</span>
+                <span class="auth-link" onclick="openModal('signUpModal')">Sign Up</span>
+            </div>
+        </div>
     </header>
 
-    <div class="container">
-        <div class="section">
-            <h2>About Us</h2>
-            <p>At Learn Computer Online, we are dedicated to providing high-quality online education for individuals looking to enhance their computer skills. Our team consists of experienced educators and industry professionals committed to delivering the best learning experience.</p>
+    <!-- Main Content Section -->
+    <main>
+        <div class="page-header">
+            <h1>About Learn Computer Online</h1>
+            <p>We are dedicated to providing high-quality online education for individuals looking to enhance their computer skills and advance their careers.</p>
         </div>
 
-        <div class="section">
-            <h2>Why Choose Us?</h2>
+        <div class="content-section">
+            <h2 class="section-title">Our Mission</h2>
+            <p>At Learn Computer Online, we believe that everyone should have access to quality education in computer science and technology. Our mission is to empower individuals through comprehensive, accessible, and engaging learning experiences.</p>
+            <p>We bring together experienced educators, industry professionals, and cutting-edge technology to create courses that are both practical and relevant to today's job market.</p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Why Choose Us?</h2>
             <p>We stand out from other online learning platforms due to our personalized approach to education. We offer:</p>
-            <ul>
-                <li>Comprehensive courses tailored to various skill levels.</li>
-                <li>Interactive learning modules that make complex concepts easy to understand.</li>
-                <li>Access to experienced instructors for guidance and support.</li>
-                <li>A flexible learning environment that allows you to learn at your own pace.</li>
-            </ul>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="feature-title">Comprehensive Courses</h3>
+                    <p>Tailored to various skill levels from beginner to advanced.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="feature-title">Interactive Learning</h3>
+                    <p>Engaging modules that make complex concepts easy to understand.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">Expert Instructors</h3>
+                    <p>Access to experienced professionals for guidance and support.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="feature-title">Flexible Learning</h3>
+                    <p>Learn at your own pace with 24/7 access to course materials.</p>
+                </div>
+            </div>
         </div>
 
-        <div class="section">
-            <h2>How to Access Our Courses</h2>
-            <p>Accessing our courses is simple:</p>
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">10,000+</div>
+                    <div class="stat-label">Students Enrolled</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">50+</div>
+                    <div class="stat-label">Courses Available</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">25+</div>
+                    <div class="stat-label">Expert Instructors</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">98%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">How to Get Started</h2>
+            <p>Accessing our courses is simple and straightforward:</p>
             <ol>
-                <li>Visit our <a href="courses.html">Courses</a> page to explore available options.</li>
+                <li>Visit our <a href="courses.html">Courses page</a> to explore available options.</li>
                 <li>Create an account or log in if you already have one.</li>
                 <li>Select a course that interests you and enroll.</li>
                 <li>Start learning! You can access your courses anytime and from anywhere.</li>
             </ol>
         </div>
 
-        <div class="section">
-            <h2>Pricing</h2>
-            <p>We offer competitive pricing to ensure that our courses are accessible to everyone. Our pricing structure includes:</p>
-            <ul>
-                <li>Individual courses at affordable rates.</li>
-                <li>Subscription plans for unlimited access to all courses.</li>
-                <li>Discounts for early registrations and group enrollments.</li>
-            </ul>
-            <p>For detailed pricing information, please visit our <a href="pricing.html">Pricing</a> page.</p>
+        <div class="content-section">
+            <h2 class="section-title">Our Team</h2>
+            <p>Our team consists of experienced educators and industry professionals committed to delivering the best learning experience.</p>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="member-name">Dr. Sarah Johnson</h3>
+                    <p class="member-role">Chief Education Officer</p>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="member-name">Michael Chen</h3>
+                    <p class="member-role">Head of Curriculum</p>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="member-name">Emily Rodriguez</h3>
+                    <p class="member-role">Senior Instructor</p>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="member-name">David Kim</h3>
+                    <p class="member-role">Technical Director</p>
+                </div>
+            </div>
         </div>
 
-        <div class="section">
-            <h2>Our Aim</h2>
-            <p>Our aim is to empower individuals through education. We believe that everyone should have access to quality learning resources. By offering diverse courses and an engaging learning platform, we strive to help our students achieve their personal and professional goals.</p>
+        <div class="content-section">
+            <h2 class="section-title">Our Vision</h2>
+            <p>Our vision is to become the leading online platform for computer education, recognized for our commitment to quality, innovation, and student success. We aim to bridge the digital skills gap by providing accessible, high-quality education to learners worldwide.</p>
+            <p>By offering diverse courses and an engaging learning platform, we strive to help our students achieve their personal and professional goals in the rapidly evolving field of technology.</p>
         </div>
-    </div>
+    </main>
 
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Learn Computer Online. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Learn Computer Online</h3>
+                <p>Your premier destination for computer education. We provide high-quality courses for all skill levels.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="contact.html">Contact Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Learning St, Education City</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@learncomputeronline.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Learn Computer Online. All rights reserved.</p>
+        </div>
     </footer>
 
+    <!-- Sign In Modal -->
     <div id="signInModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('signInModal')">&times;</span>
-            <h2>Sign In</h2>
-            <form id="signInForm" class="form-container">
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
-                <button type="submit">Sign In</button>
-                <p class="auth-link" onclick="switchToSignUp()">Don't have an account? Sign Up</p>
+            <span class="close-modal" onclick="closeModal('signInModal')">&times;</span>
+            <div class="modal-header">
+                <h2>Sign In</h2>
+            </div>
+            <form id="signInForm">
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+                <div class="auth-switch">
+                    Don't have an account? <a onclick="switchToSignUp()">Sign Up</a>
+                </div>
             </form>
         </div>
     </div>
 
+    <!-- Sign Up Modal -->
     <div id="signUpModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('signUpModal')">&times;</span>
-            <h2>Sign Up</h2>
-            <form id="signUpForm" class="form-container">
-                <input type="text" placeholder="Full Name" required>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
-                <button type="submit">Sign Up</button>
-                <p class="auth-link" onclick="switchToSignIn()">Already have an account? Sign In</p>
+            <span class="close-modal" onclick="closeModal('signUpModal')">&times;</span>
+            <div class="modal-header">
+                <h2>Sign Up</h2>
+            </div>
+            <form id="signUpForm">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+                <div class="auth-switch">
+                    Already have an account? <a onclick="switchToSignIn()">Sign In</a>
+                </div>
             </form>
         </div>
     </div>
 
     <script>
+        // Modal functions
         function openModal(modalId) {
-            document.getElementById(modalId).style.display = "block";
+            document.getElementById(modalId).style.display = "flex";
         }
 
         function closeModal(modalId) {
@@ -178,21 +806,25 @@
             openModal('signInModal');
         }
 
-        window.onclick = function(event) {
-            if (event.target.classList.contains("modal")) {
-                event.target.style.display = "none";
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
             }
-        }
+        });
 
-        document.getElementById("signInForm").onsubmit = function(event) {
+        // Form submission handlers
+        document.getElementById('signInForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            alert("Sign in form submitted");
-        };
+            alert('Sign in functionality would be implemented here');
+            closeModal('signInModal');
+        });
 
-        document.getElementById("signUpForm").onsubmit = function(event) {
+        document.getElementById('signUpForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            alert("Sign up form submitted");
-        };
+            alert('Sign up functionality would be implemented here');
+            closeModal('signUpModal');
+        });
     </script>
 </body>
 </html>

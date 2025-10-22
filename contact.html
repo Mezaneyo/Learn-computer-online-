@@ -4,257 +4,812 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Learn Computer Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Basic reset */
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary: #2c5aa0;
+            --primary-dark: #1e3d72;
+            --secondary: #ff6b35;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --success: #28a745;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset and base styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Header and logo styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
         header {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 10px 20px;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        header h1 {
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .site-title {
             font-size: 1.5rem;
-            margin: 0;
+            font-weight: 700;
         }
 
-        /* Navigation styling */
         nav {
             display: flex;
-            gap: 15px;
+            gap: 1.5rem;
         }
 
         nav a {
             color: white;
             text-decoration: none;
-            padding: 8px 12px;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
         }
 
-        nav a:hover {
-            background-color: #45a049;
-            border-radius: 4px;
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.15);
         }
 
-        /* Main Content Styling */
+        /* Main content */
         main {
-            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
-        main h2 {
-            font-size: 2rem;
-            color: #4CAF50;
-            margin-bottom: 10px;
-        }
-
-        main form label {
-            font-size: 1rem;
-            color: #333;
-            display: block;
-            margin-top: 10px;
-        }
-
-        main form input, main form textarea, main form button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            font-size: 1rem;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-
-        main form button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        main form button:hover {
-            background-color: #45a049;
-        }
-
-        /* Quick Contact & Get in Touch Sections */
-        main h3 {
-            font-size: 1.5rem;
-            color: #333;
-            margin-top: 20px;
-        }
-
-        main p, main ul {
-            font-size: 1rem;
-            color: #555;
-            line-height: 1.6;
-        }
-
-        main ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        main ul li a {
-            color: #4CAF50;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        main ul li a:hover {
-            color: #45a049;
-        }
-
-        /* Footer Styling */
-        footer {
-            background-color: #f1f1f1;
-            padding: 10px 20px;
+        .page-header {
             text-align: center;
-            color: #333;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Contact layout */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Contact form */
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid #e1e5eb;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn {
+            padding: 0.9rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 90, 160, 0.3);
+        }
+
+        /* Contact info */
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .info-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .info-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .info-content p {
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-link {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .info-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        /* WhatsApp section */
+        .whatsapp-section {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .whatsapp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .whatsapp-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .whatsapp-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .whatsapp-icon {
+            font-size: 2rem;
+            color: #25D366;
+            margin-bottom: 1rem;
+        }
+
+        .whatsapp-link {
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .whatsapp-link:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        /* Message history */
+        .message-history {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 3rem;
+        }
+
+        .message-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+        }
+
+        .message-item {
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .message-item:last-child {
+            border-bottom: none;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-user {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .message-time {
+            color: var(--gray);
             font-size: 0.9rem;
+        }
+
+        .message-content {
+            color: var(--dark);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-form, .contact-info, .whatsapp-section, .message-history {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            main {
+                padding: 1rem;
+            }
+            
+            .whatsapp-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Header Section -->
     <header>
-        <h1>Learn Computer Online</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="courses.html">Courses</a>
-            <a href="blog.html">Blog</a>
-            <a href="resources.html">Resources</a>
-            <a href="contact.html">Contact</a>
-        </nav>
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo">LCO</div>
+                <div class="site-title">Learn Computer Online</div>
+            </div>
+            
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="blog.html">Blog</a>
+                <a href="resources.html">Resources</a>
+                <a href="contact.html" class="active">Contact</a>
+            </nav>
+        </div>
     </header>
 
     <!-- Main Content Section -->
     <main>
-        <h2>Contact Us</h2>
-        <form id="contactForm">
-    <input type="text" id="username" placeholder="Enter your username" required>
-    <textarea id="message" placeholder="Enter your message" required></textarea>
-    <button type="submit">Send Message</button>
-</form>
+        <div class="page-header">
+            <h1>Contact Us</h1>
+            <p>Have questions or need assistance? We're here to help! Reach out to us through any of the following methods.</p>
+        </div>
 
-<ul id="messageList"></ul>
+        <div class="contact-container">
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <h2 class="form-title">Send Us a Message</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="username" class="form-label">Your Name</label>
+                        <input type="text" id="username" class="form-control" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Your Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">Your Message</label>
+                        <textarea id="message" class="form-control" placeholder="Enter your message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
 
-        <h3>Quick Contact via WhatsApp</h3>
-        <p>If you prefer, you can reach us on WhatsApp with one of the following quick messages:</p>
-        <ul>
-            <li><a href="https://wa.me/265983583444?text=How%20may%20I%20help%20you?" target="_blank">How may I help you?</a></li>
-            <li><a href="https://wa.me/265983583444?text=How%20can%20I%20enroll%20in%20a%20course?" target="_blank">How can I enroll in a course?</a></li>
-            <li><a href="https://wa.me/265983583444?text=What%20courses%20do%20you%20offer?" target="_blank">What courses do you offer?</a></li>
-        </ul>
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <h2 class="info-title">Get In Touch</h2>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Phone</h3>
+                        <p>Call us directly for immediate assistance</p>
+                        <a href="tel:+265983583444" class="info-link">+265 983 583 444</a>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>WhatsApp</h3>
+                        <p>Chat with us on WhatsApp</p>
+                        <a href="https://wa.me/265983583444" target="_blank" class="info-link">+265 983 583 444</a>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Email</h3>
+                        <p>Send us an email anytime</p>
+                        <a href="mailto:mezaneyo2@gmail.com" class="info-link">mezaneyo2@gmail.com</a>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Response Time</h3>
+                        <p>We typically respond within 24 hours</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <h3>Get in Touch</h3>
-        <p>If you have any questions, feel free to reach out:</p>
-        <ul>
-            <li><strong>Phone:</strong> <a href="tel:+265983583444">+265983583444</a> | <a href="https://wa.me/265983583444" target="_blank">WhatsApp</a></li>
-            <li><strong>Email:</strong> <a href="mailto:mezaneyo2@gmail.com">mezaneyo2@gmail.com</a></li>
-        </ul>
+        <!-- WhatsApp Quick Contact -->
+        <div class="whatsapp-section">
+            <h2 class="section-title">Quick Contact via WhatsApp</h2>
+            <p>If you prefer, you can reach us on WhatsApp with one of the following quick messages:</p>
+            
+            <div class="whatsapp-grid">
+                <div class="whatsapp-card">
+                    <div class="whatsapp-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>General Inquiry</h3>
+                    <p>Have a general question? Start a conversation with us.</p>
+                    <a href="https://wa.me/265983583444?text=Hello!%20I%20have%20a%20question%20about%20your%20courses." target="_blank" class="whatsapp-link">
+                        <i class="fab fa-whatsapp"></i> Send Message
+                    </a>
+                </div>
+                
+                <div class="whatsapp-card">
+                    <div class="whatsapp-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>Course Enrollment</h3>
+                    <p>Interested in enrolling? We'll guide you through the process.</p>
+                    <a href="https://wa.me/265983583444?text=Hi!%20I'm%20interested%20in%20enrolling%20in%20a%20course." target="_blank" class="whatsapp-link">
+                        <i class="fab fa-whatsapp"></i> Send Message
+                    </a>
+                </div>
+                
+                <div class="whatsapp-card">
+                    <div class="whatsapp-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>Course Information</h3>
+                    <p>Want to know more about our course offerings?</p>
+                    <a href="https://wa.me/265983583444?text=Can%20you%20tell%20me%20more%20about%20your%20courses?" target="_blank" class="whatsapp-link">
+                        <i class="fab fa-whatsapp"></i> Send Message
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message History -->
+        <div class="message-history">
+            <h2 class="section-title">Recent Messages</h2>
+            <div class="message-list" id="messageList">
+                <!-- Messages will be displayed here -->
+                <div class="message-item">
+                    <div class="message-header">
+                        <span class="message-user">System</span>
+                        <span class="message-time">Just now</span>
+                    </div>
+                    <div class="message-content">
+                        Your messages will appear here once sent.
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <!-- Footer Section -->
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Learn Computer Online. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Learn Computer Online</h3>
+                <p>Your premier destination for computer education. We provide high-quality courses for all skill levels.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="contact.html">Contact Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Learning St, Education City</li>
+                    <li><i class="fas fa-phone"></i> +265 983 583 444</li>
+                    <li><i class="fas fa-envelope"></i> mezaneyo2@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Learn Computer Online. All rights reserved.</p>
+        </div>
     </footer>
+
     <script>
-    // Initialize Socket.IO
-    const socket = io("http://172.58.172.77:5000");
+        // Initialize Socket.IO
+        const socket = io("http://172.58.172.77:5000");
 
-    // Function to send message to the server via API
-    async function sendMessage(username, message) {
-        const timestamp = new Date().toISOString();
+        // Function to send message to the server via API
+        async function sendMessage(username, email, message) {
+            const timestamp = new Date().toISOString();
 
-        try {
-            const response = await fetch("http://172.58.172.77:5000/send_message", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    username: username,
-                    message: message,
-                    timestamp: timestamp
-                })
-            });
-
-            const data = await response.json();
-            if (data.success) {
-                console.log("Message sent successfully:", data.message);
-            } else {
-                console.error("Error sending message:", data.message);
-            }
-        } catch (error) {
-            console.error("Network error:", error);
-        }
-    }
-
-    // Function to handle form submission
-    document.getElementById("contactForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        // Retrieve username and message values from the form
-        const username = document.getElementById("username").value;
-        const message = document.getElementById("message").value;
-
-        if (username && message) {
-            // Send the message via API and emit it to Socket.IO
-            sendMessage(username, message);
-            socket.emit("chat message", { username: username, message: message });
-            
-            // Clear the message input field
-            document.getElementById("message").value = "";
-        } else {
-            alert("Please enter both username and message.");
-        }
-    });
-
-    // Listen for real-time messages from the server and display them
-    socket.on("chat message", function(data) {
-        const messageList = document.getElementById("messageList");
-        
-        // Create a new message item
-        const messageItem = document.createElement("li");
-        messageItem.textContent = `${data.timestamp} - ${data.username}: ${data.message}`;
-        
-        // Append the new message item to the list
-        messageList.appendChild(messageItem);
-    });
-
-    // Retrieve all previous messages on page load
-    async function loadMessages() {
-        try {
-            const response = await fetch("http://172.58.172.77:5000/get_messages");
-            const data = await response.json();
-            
-            if (data.messages) {
-                const messageList = document.getElementById("messageList");
-                messageList.innerHTML = "";  // Clear current messages
-                
-                // Add each message to the list
-                data.messages.forEach(msg => {
-                    const messageItem = document.createElement("li");
-                    messageItem.textContent = `${msg.timestamp} - ${msg.username}: ${msg.message}`;
-                    messageList.appendChild(messageItem);
+            try {
+                const response = await fetch("http://172.58.172.77:5000/send_message", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        message: message,
+                        timestamp: timestamp
+                    })
                 });
-            }
-        } catch (error) {
-            console.error("Error loading messages:", error);
-        }
-    }
 
-    // Load messages on page load
-    document.addEventListener("DOMContentLoaded", loadMessages);
-</script>
+                const data = await response.json();
+                if (data.success) {
+                    console.log("Message sent successfully:", data.message);
+                    // Clear the form
+                    document.getElementById("contactForm").reset();
+                    // Show success message
+                    alert("Your message has been sent successfully!");
+                } else {
+                    console.error("Error sending message:", data.message);
+                    alert("There was an error sending your message. Please try again.");
+                }
+            } catch (error) {
+                console.error("Network error:", error);
+                alert("Network error. Please check your connection and try again.");
+            }
+        }
+
+        // Function to handle form submission
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Retrieve form values
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+
+            if (username && email && message) {
+                // Send the message via API and emit it to Socket.IO
+                sendMessage(username, email, message);
+                socket.emit("chat message", { username: username, message: message });
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+
+        // Listen for real-time messages from the server and display them
+        socket.on("chat message", function(data) {
+            const messageList = document.getElementById("messageList");
+            
+            // Create a new message item
+            const messageItem = document.createElement("div");
+            messageItem.className = "message-item";
+            
+            const timestamp = new Date(data.timestamp).toLocaleString();
+            
+            messageItem.innerHTML = `
+                <div class="message-header">
+                    <span class="message-user">${data.username}</span>
+                    <span class="message-time">${timestamp}</span>
+                </div>
+                <div class="message-content">${data.message}</div>
+            `;
+            
+            // Prepend the new message to the list (newest first)
+            messageList.prepend(messageItem);
+            
+            // Remove the placeholder message if it exists
+            const placeholder = messageList.querySelector('.message-item:last-child');
+            if (placeholder && placeholder.querySelector('.message-user').textContent === 'System') {
+                placeholder.remove();
+            }
+        });
+
+        // Retrieve all previous messages on page load
+        async function loadMessages() {
+            try {
+                const response = await fetch("http://172.58.172.77:5000/get_messages");
+                const data = await response.json();
+                
+                if (data.messages && data.messages.length > 0) {
+                    const messageList = document.getElementById("messageList");
+                    messageList.innerHTML = "";  // Clear current messages
+                    
+                    // Add each message to the list (newest first)
+                    data.messages.reverse().forEach(msg => {
+                        const messageItem = document.createElement("div");
+                        messageItem.className = "message-item";
+                        
+                        const timestamp = new Date(msg.timestamp).toLocaleString();
+                        
+                        messageItem.innerHTML = `
+                            <div class="message-header">
+                                <span class="message-user">${msg.username}</span>
+                                <span class="message-time">${timestamp}</span>
+                            </div>
+                            <div class="message-content">${msg.message}</div>
+                        `;
+                        
+                        messageList.appendChild(messageItem);
+                    });
+                }
+            } catch (error) {
+                console.error("Error loading messages:", error);
+            }
+        }
+
+        // Load messages on page load
+        document.addEventListener("DOMContentLoaded", loadMessages);
+    </script>
 </body>
 </html>
